@@ -125,6 +125,19 @@
      <string>MANUAL REINIT</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>40</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RECORD</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -132,7 +145,7 @@
      <x>0</x>
      <y>0</y>
      <width>1099</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

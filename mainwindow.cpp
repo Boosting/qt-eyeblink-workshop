@@ -81,3 +81,7 @@ void MainWindow::on_pushButton_4_clicked(){
 void MainWindow::on_pushButton_5_clicked(){
     emit reinitSignal();
 }
+
+void MainWindow::on_pushButton_6_clicked(){
+    emit recordSignal();
+}

@@ -25,6 +25,7 @@ signals:
     void stopCaptureSignal();   //chcem vypnut blinkera
     void sendPushed();  //chcem zmenit zasielanie/nezasielanie frejmu na obrazovku
     void reinitSignal();    //chcem manualne reinicializovat
+    void recordSignal();    //chcem nahravat/prestat nahravat
 
 private slots:  //gui sloty
     void on_pushButton_clicked();
@@ -36,6 +37,7 @@ private slots:  //gui sloty
     void on_pushButton_3_clicked();
     void on_pushButton_4_clicked();
     void on_pushButton_5_clicked();
+    void on_pushButton_6_clicked();
 
 private:
     Ui::MainWindow *ui;

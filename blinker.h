@@ -30,17 +30,20 @@ public slots:
     void startCapture();    //spusti detekciu zmurknutia
     void stopCapture();     //zastavi detekciu zmurknutia
     void toggleSend();      //prepina medzi zasielanim frejmu a nezasielanim frejmu
+    void toggleRecord();    //prepina medzi zasielanim record frejmu a nezasielanim record frejmu (cisty frejm)
     void manualReinit();    //manualna reinicializacia
 
 signals:
     void finished();
     void newFrameSignal(cv::Mat *matrix);   //mam novy frejm a mozem ho poslat
+    void newRecordFrameSignal(cv::Mat *matrix);   //mam novy record frejm a mozem ho poslat
     void blinkSignal();     //nastalo zmurknutie
     void subjectPresentSignal(bool isVisible);  //signal s atributom ci je subjekt viditelny
 
 private:
     bool stop;  //ovladanie capture
     bool send;  //ovladanie zasielania frejmu
+    bool record; //ovladanie zasielania record frejmu
 
     //capture variables
     QString capString;
@@ -106,6 +109,7 @@ private:
     void reinitCond();
 
     void sendFrame();
+    void sendRecordFrame();
 
 };
 

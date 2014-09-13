@@ -8,6 +8,7 @@ Blinker::Blinker() {
 
     stop = false;
     send = true;
+    record = false;
 
     print = false;
 
@@ -177,6 +178,12 @@ void Blinker::startCapture(){
     end = (float) getTickCount();
     fpsNum = 1.0 / (end - start) * getTickFrequency();
 
+    //send record signal with frame
+    if(record){
+        sendRecordFrame();
+        //cout << "posielam" << endl;
+    }
+
     drawFrame();
     reinitCond();
     resetVariables();
@@ -195,7 +202,7 @@ void Blinker::startCapture(){
         cap.release();
 
         //emit finished();
-        cout << "finisujem" << endl;
+        //cout << "finisujem" << endl;
 
         return;
     }
@@ -667,6 +674,10 @@ void Blinker::sendFrame(){
     emit newFrameSignal(&frame);
 }
 
+void Blinker::sendRecordFrame(){
+    emit newRecordFrameSignal(&frame);
+}
+
 void Blinker::setCap(QString string){
     capString = string;
 }
@@ -681,6 +692,15 @@ void Blinker::toggleSend(){
     }
     else{
         send = true;
+    }
+}
+
+void Blinker::toggleRecord(){
+    if(record){
+        record = false;
+    }
+    else{
+        record = true;
     }
 }
 

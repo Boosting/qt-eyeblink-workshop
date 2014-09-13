@@ -31,11 +31,13 @@ SOURCES +=\
         mainwindow.cpp \
     main.cpp \
     matcv.cpp \
-    blinker.cpp
+    blinker.cpp \
+    recorder.cpp
 
 HEADERS  += mainwindow.h \
     cvimagewidget.h \
     matcv.h \
-    blinker.h
+    blinker.h \
+    recorder.h
 
 FORMS    += mainwindow.ui
