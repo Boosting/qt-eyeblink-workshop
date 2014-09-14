@@ -238,8 +238,11 @@ bool Blinker::loadCascades(){
     //string faceCascadeName = "/home/tomas/source/qt_workspace/eyeblink/haarcascade_frontalface_default.xml";
     //string eyeCascadeName = "/home/tomas/source/qt_workspace/eyeblink/haarcascade_mcs_eyepair_big.xml";
 
-    string faceCascadeName = "C:/Users/Tomi/Documents/qt_workspace/eyeblink_workshop/haarcascade_frontalface_default.xml";
-    string eyeCascadeName = "C:/Users/Tomi/Documents/qt_workspace/eyeblink_workshop/haarcascade_mcs_eyepair_big.xml";
+    //string faceCascadeName = "C:/Users/Tomi/Documents/qt_workspace/eyeblink_workshop/haarcascade_frontalface_default.xml";
+    //string eyeCascadeName = "C:/Users/Tomi/Documents/qt_workspace/eyeblink_workshop/haarcascade_mcs_eyepair_big.xml";
+
+    string faceCascadeName = "./haarcascade_frontalface_default.xml";
+    string eyeCascadeName = "./haarcascade_mcs_eyepair_big.xml";
 
     if(!faceCascade.load(faceCascadeName)){
         cout << "error loading face cascade!" << endl;
@@ -598,7 +601,7 @@ void Blinker::drawFrame(){
     if(leftFinalPoints.size() != 0 && rightFinalPoints.size() != 0){
         //final thigns---------------------------------------------------------
         for(int i = 0; i < leftFeaturesNext.size(); i++){
-            // circle(frame, leftFeaturesNext[i], 1, Scalar(0, 0, 0), 1, 8);
+            circle(frame, leftFeaturesNext[i], 1, Scalar(0, 0, 0), 1, 8);
         }
 
         for(int i = 0; i < rightFeaturesNext.size(); i++){
@@ -606,7 +609,7 @@ void Blinker::drawFrame(){
         }
 
         for(int i = 0; i < leftFinalPoints.size(); i++){
-            //circle(frame, leftFinalPoints[i], 1, Scalar(255, 255, 255), 1, 8);
+            circle(frame, leftFinalPoints[i], 1, Scalar(255, 255, 255), 1, 8);
         }
 
         for(int i = 0; i < rightFinalPoints.size(); i++){
