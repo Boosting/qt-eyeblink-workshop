@@ -4,8 +4,12 @@
 #include <QObject>
 #include <QThread>
 #include <QString>
+#include <string>
+#include <QDir>
 
 #include <iostream>
+#include <fstream>
+#include <ctime>
 
 #include "opencv2/opencv.hpp"
 #include <opencv2/imgproc/imgproc.hpp>
@@ -23,15 +27,36 @@ public:
 
 signals:
     void finished();
+    void selectFolderSignal();
+    void changeRecordButton();
 
 public slots:
     void init();    //inicializacia video suboru
-    void saveMat(cv::Mat *mat);
+    void save();    //ulozenie a ukoncenie recordera
+    bool saveMat(cv::Mat *mat);
+    void setFolder(QString str);
 
 private:
     cv::VideoWriter output_cap;
+    std::ofstream outputFile;
+
+    QString folderAddress;
+    QString currentFolderAddress;
+    QString videoFileAddress;
+    QString outputFileAddress;
+
+    int64 startTime, currentTime;
+    float elapsedTime;
+    int frameCounter;
+
+    bool recording;
+
 
     bool openVideoFile();
+    bool openOutputFile();
+    void closeOutputFile();
+    void closeVideoFile();
+    void generateNewFileName();
 };
 
 #endif // RECORDER_H

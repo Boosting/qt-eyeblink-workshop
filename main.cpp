@@ -1,12 +1,13 @@
 #include "mainwindow.h"
-#include <cvimagewidget.h>
 #include <QApplication>
+#include <cvimagewidget.h>
 #include <QThread>
 #include <blinker.h>
 #include <recorder.h>
 #include <matcv.h>
 #include <iostream>
 #include <QMetaType>
+#include <iostream>
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
@@ -47,12 +48,31 @@ int main(int argc, char *argv[]){
 
     QThread::connect(window, SIGNAL(startCaptureSignal()), blinker, SLOT(startCapture()));
     QThread::connect(window, SIGNAL(stopCaptureSignal()), blinker, SLOT(stopCapture()));
+    QThread::connect(window, SIGNAL(finished()), blinker, SLOT(stopCapture()));
     QThread::connect(window, SIGNAL(sendPushed()), blinker, SLOT(toggleSend()));
     QThread::connect(window, SIGNAL(reinitSignal()), blinker, SLOT(manualReinit()));
 
-    QThread::connect(window, SIGNAL(recordSignal()), recorder, SLOT(init()));
-    QThread::connect(window, SIGNAL(recordSignal()), blinker, SLOT(toggleRecord()));
+    QThread::connect(window, SIGNAL(startRecordSignal()), recorder, SLOT(init()));
+    QThread::connect(window, SIGNAL(stopRecordSignal()), recorder, SLOT(save()));
+    QThread::connect(window, SIGNAL(startRecordSignal()), blinker, SLOT(toggleRecord()));
+    QThread::connect(window, SIGNAL(stopRecordSignal()), blinker, SLOT(toggleRecord()));
+
+    QThread::connect(window, SIGNAL(stopCaptureSignal()), recorder, SLOT(save()));
+    QThread::connect(window, SIGNAL(finished()), recorder, SLOT(save()));
+
+
     QThread::connect(blinker, SIGNAL(newRecordFrameSignal(cv::Mat*)), recorder, SLOT(saveMat(cv::Mat*)));
+
+
+    QThread::connect(recorder, SIGNAL(selectFolderSignal()), window, SLOT(informationBox1()));
+    QThread::connect(recorder, SIGNAL(changeRecordButton()), window, SLOT(changeRecordLabel()));
+
+    QThread::connect(window, SIGNAL(folderSelectedSignal(QString)), recorder, SLOT(setFolder(QString)));
+
+
+    QTimer::singleShot(1000, window, SLOT(updateTime()));
+    //QTimer::
+
 
     threadBlinker->start();
     threadRecorder->start();

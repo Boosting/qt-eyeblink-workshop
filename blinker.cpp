@@ -235,8 +235,11 @@ bool Blinker::initialize(){
 }
 
 bool Blinker::loadCascades(){
-    string faceCascadeName = "/home/tomas/source/qt_workspace/eyeblink/haarcascade_frontalface_default.xml";
-    string eyeCascadeName = "/home/tomas/source/qt_workspace/eyeblink/haarcascade_mcs_eyepair_big.xml";
+    //string faceCascadeName = "/home/tomas/source/qt_workspace/eyeblink/haarcascade_frontalface_default.xml";
+    //string eyeCascadeName = "/home/tomas/source/qt_workspace/eyeblink/haarcascade_mcs_eyepair_big.xml";
+
+    string faceCascadeName = "C:/Users/Tomi/Documents/qt_workspace/eyeblink_workshop/haarcascade_frontalface_default.xml";
+    string eyeCascadeName = "C:/Users/Tomi/Documents/qt_workspace/eyeblink_workshop/haarcascade_mcs_eyepair_big.xml";
 
     if(!faceCascade.load(faceCascadeName)){
         cout << "error loading face cascade!" << endl;
@@ -689,6 +692,9 @@ void Blinker::stopCapture(){
 void Blinker::toggleSend(){
     if(send){
         send = false;
+
+        frame = imread("./background.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+        sendFrame();
     }
     else{
         send = true;

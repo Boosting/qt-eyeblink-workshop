@@ -90,6 +90,8 @@ private:
     int blinkCount, nonblinkCount, reinitCount;
     int blinkThresh;
 
+
+
     //help variables
 
     //methods

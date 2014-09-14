@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
-#include <QString>
-#include <opencv/cv.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow){
     ui->setupUi(this);
+
+    timer = new QTimer(this);
+    timer->start(1000);
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
 }
 
 MainWindow::~MainWindow(){
@@ -15,23 +16,19 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::on_pushButton_clicked(){
-    //std::cout << "klikol som" << std::endl;
-    //toto by chcelo zmenit, netreba tu tento slot
-    emit startCaptureSignal();
-}
-
-void MainWindow::setFrameNumber(int value){
-    QString str = QString::number(value);
-    ui->frameNumberLabel->setText(str);
+    if(ui->pushButton->text().compare(QString("START tracking")) == 0){
+        ui->pushButton->setText(QString("STOP tracking"));
+        emit startCaptureSignal();
+    }
+    else if(ui->pushButton->text().compare(QString("STOP tracking")) == 0){
+        ui->pushButton->setText(QString("START tracking"));
+        emit stopCaptureSignal();
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked(){
     close();
     emit finished();
-}
-
-void MainWindow::labelPrint(int value){
-    ui->frameNumberLabel->setText(QString::number(value));
 }
 
 /*
@@ -74,14 +71,51 @@ void MainWindow::on_pushButton_3_clicked(){
     emit sendPushed();
 }
 
-void MainWindow::on_pushButton_4_clicked(){
-    emit stopCaptureSignal();
-}
-
 void MainWindow::on_pushButton_5_clicked(){
     emit reinitSignal();
 }
 
 void MainWindow::on_pushButton_6_clicked(){
-    emit recordSignal();
+    if(ui->pushButton_6->text().compare(QString("RECORD")) == 0){
+        std::cout << "zacinam" << std::endl;
+        emit startRecordSignal();
+    }
+    else if(ui->pushButton_6->text().compare(QString("STOP recording")) == 0){
+        std::cout << "koncim" << std::endl;
+        emit stopRecordSignal();
+    }
+}
+
+void MainWindow::changeRecordLabel(){
+    if(ui->pushButton_6->text().compare(QString("RECORD")) == 0){
+        ui->pushButton_6->setText(QString("STOP recording"));
+    }
+    else if(ui->pushButton_6->text().compare(QString("STOP recording")) == 0){
+        ui->pushButton_6->setText(QString("RECORD"));
+    }
+}
+
+void MainWindow::on_pushButton_7_clicked(){
+    QFileDialog dialog(this);
+
+    dialog.setFileMode(QFileDialog::Directory);
+    dialog.setViewMode(QFileDialog::Detail);
+    dialog.setNameFilter("directories");
+
+    //start open file dialog
+    QStringList fileNames;
+    if(dialog.exec()){
+        fileNames = dialog.selectedFiles();
+        ui->label_2->setText(fileNames[0]);
+        emit folderSelectedSignal(ui->label_2->text());
+    }
+}
+
+void MainWindow::informationBox1(){
+    QMessageBox::information(0, "Select folder", "Please select save folder first.");
+}
+
+void MainWindow::updateTime(){
+    QString text = QTime::currentTime().toString();
+    ui->label->setText(text);
 }
