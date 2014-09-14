@@ -57,3 +57,5 @@ HEADERS  += mainwindow.h \
     recorder.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES +=

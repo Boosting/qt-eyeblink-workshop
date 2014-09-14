@@ -65,6 +65,9 @@ void MainWindow::showMat(cv::Mat *mat){
 
 void MainWindow::printBlink(){
     std::cout << "BLINK!" << std::endl;
+    if(ui->radioButton->isChecked()){
+        QApplication::beep();
+    }
 }
 
 void MainWindow::on_pushButton_3_clicked(){
