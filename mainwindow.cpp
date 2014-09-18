@@ -9,6 +9,14 @@ MainWindow::MainWindow(QWidget *parent) :
     timer = new QTimer(this);
     timer->start(1000);
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+
+    recTimer = new QTimer(this);
+    QObject::connect(recTimer, SIGNAL(timeout()), this, SLOT(updateRecImage()));
+
+
+    ui->label_4->setPixmap(QPixmap("./rec.png"));
+    ui->label_4->hide();
+
 }
 
 MainWindow::~MainWindow(){
@@ -87,14 +95,19 @@ void MainWindow::on_pushButton_6_clicked(){
         std::cout << "koncim" << std::endl;
         emit stopRecordSignal();
     }
+
+    //recTimer->start(1000);
 }
 
 void MainWindow::changeRecordLabel(){
     if(ui->pushButton_6->text().compare(QString("RECORD")) == 0){
         ui->pushButton_6->setText(QString("STOP recording"));
+        recTimer->start(1000);
     }
     else if(ui->pushButton_6->text().compare(QString("STOP recording")) == 0){
         ui->pushButton_6->setText(QString("RECORD"));
+        recTimer->stop();
+        ui->label_4->hide();
     }
 }
 
@@ -121,4 +134,13 @@ void MainWindow::informationBox1(){
 void MainWindow::updateTime(){
     QString text = QTime::currentTime().toString();
     ui->label->setText(text);
+}
+
+void MainWindow::updateRecImage(){
+    if(ui->label_4->isHidden()){
+        ui->label_4->show();
+    }
+    else{
+        ui->label_4->hide();
+    }
 }

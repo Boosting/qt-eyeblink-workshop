@@ -29,6 +29,7 @@ public slots:
     void informationBox1();
     void changeRecordLabel();
     void updateTime();
+    void updateRecImage();
 
 signals:
     void finished();    //koniec GUI
@@ -54,6 +55,7 @@ private slots:  //gui sloty
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
+    QTimer *recTimer;
 };
 
 #endif // MAINWINDOW_H
