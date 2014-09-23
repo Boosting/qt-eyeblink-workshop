@@ -46,6 +46,10 @@ int main(int argc, char *argv[]){
     QThread::connect(blinker, SIGNAL(newFrameSignal(cv::Mat*)), window, SLOT(showMat(cv::Mat*)));
     QThread::connect(blinker, SIGNAL(blinkSignal()), window, SLOT(printBlink()));
 
+    QThread::connect(blinker, SIGNAL(blinkSignal()), recorder, SLOT(getMinute()));
+    QThread::connect(recorder, SIGNAL(minuteSignal(int)), window, SLOT(updateTable(int)));
+
+
     QThread::connect(window, SIGNAL(startCaptureSignal()), blinker, SLOT(startCapture()));
     QThread::connect(window, SIGNAL(stopCaptureSignal()), blinker, SLOT(stopCapture()));
     QThread::connect(window, SIGNAL(finished()), blinker, SLOT(stopCapture()));

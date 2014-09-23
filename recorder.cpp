@@ -103,8 +103,10 @@ bool Recorder::saveMat(cv::Mat *mat){
     //imshow(videoFileAddress.c_str(), frame);
     output_cap << frame;
 
-    elapsedTime = (currentTime - startTime)/getTickFrequency();
+    elapsedTime = (float) (currentTime - startTime)/getTickFrequency();
     outputFile << frameCounter << " " << elapsedTime << endl;
+
+    minute = 1 + (int) (elapsedTime / 10);
 
     //printTime();
 
@@ -202,4 +204,10 @@ void Recorder::generateNewFileName(){
 void Recorder::setFolder(QString str){
     folderAddress.clear();
     folderAddress.append(str);
+}
+
+void Recorder::getMinute(){
+    if(recording){
+        emit minuteSignal(minute);
+    }
 }

@@ -29,12 +29,14 @@ signals:
     void finished();
     void selectFolderSignal();
     void changeRecordButton();
+    void minuteSignal(int min);
 
 public slots:
     void init();    //inicializacia video suboru
     void save();    //ulozenie a ukoncenie recordera
     bool saveMat(cv::Mat *mat);
     void setFolder(QString str);
+    void getMinute();
 
 private:
     cv::VideoWriter output_cap;
@@ -48,6 +50,8 @@ private:
     int64 startTime, currentTime;
     float elapsedTime;
     int frameCounter;
+
+    int minute;
 
     bool recording;
 

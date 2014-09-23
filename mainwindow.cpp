@@ -144,3 +144,21 @@ void MainWindow::updateRecImage(){
         ui->label_4->hide();
     }
 }
+
+void MainWindow::updateTable(int minute){
+    std::cout << minute << std::endl;
+
+    if(ui->tableWidget->rowCount() != minute){
+        ui->tableWidget->setRowCount(minute);
+        ui->tableWidget->setItem(minute - 1, 0, new QTableWidgetItem(QString(QString::number(minute).append(". minute"))));
+        ui->tableWidget->setItem(minute - 1, 1, new QTableWidgetItem(QString(QString::number(1))));
+    }
+    else{
+        int number = ui->tableWidget->item(minute - 1, 1)->text().toInt();
+        number++;
+        ui->tableWidget->setItem(minute - 1, 1, new QTableWidgetItem(QString(QString::number(number))));
+    }
+
+
+
+}

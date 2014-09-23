@@ -30,6 +30,7 @@ public slots:
     void changeRecordLabel();
     void updateTime();
     void updateRecImage();
+    void updateTable(int minute);
 
 signals:
     void finished();    //koniec GUI
