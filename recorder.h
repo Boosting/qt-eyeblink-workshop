@@ -36,7 +36,6 @@ public slots:
     void save();    //ulozenie a ukoncenie recordera
     bool saveMat(cv::Mat *mat);
     void setFolder(QString str);
-    void getMinute();
 
 private:
     cv::VideoWriter output_cap;

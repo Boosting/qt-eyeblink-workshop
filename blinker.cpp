@@ -161,6 +161,7 @@ void Blinker::startCapture(){
     //blink occured
     if((leftBlink || rightBlink) && blinkCount > blinkThresh){
         emit blinkSignal();
+        emit minuteSignal(minute);
 
         //minimum number of frames between two blinks
         blinkCount = 0;
@@ -230,6 +231,8 @@ bool Blinker::initialize(){
         cap.release();
         return false;
     }
+
+    startTime = getTickCount();
 
     return true;
 }
@@ -677,6 +680,14 @@ void Blinker::resetVariables(){
 }
 
 void Blinker::sendFrame(){
+
+    currentTime = getTickCount();
+
+    elapsedTime = (float) (currentTime - startTime)/getTickFrequency();
+
+    minute = 1 + (int) (elapsedTime / 60);
+
+
     emit newFrameSignal(&frame);
 }
 
@@ -715,4 +726,6 @@ void Blinker::toggleRecord(){
 
 void Blinker::manualReinit(){
     init = true;
+
+    startTime = getTickCount();
 }

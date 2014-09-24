@@ -13,10 +13,13 @@ MainWindow::MainWindow(QWidget *parent) :
     recTimer = new QTimer(this);
     QObject::connect(recTimer, SIGNAL(timeout()), this, SLOT(updateRecImage()));
 
+    blinkTimer = new QTimer(this);
 
     ui->label_4->setPixmap(QPixmap("./rec.png"));
     ui->label_4->hide();
+    //ui->label_4->show();
 
+    ui->label_5->hide();
 }
 
 MainWindow::~MainWindow(){
@@ -95,8 +98,6 @@ void MainWindow::on_pushButton_6_clicked(){
         std::cout << "koncim" << std::endl;
         emit stopRecordSignal();
     }
-
-    //recTimer->start(1000);
 }
 
 void MainWindow::changeRecordLabel(){
@@ -145,10 +146,14 @@ void MainWindow::updateRecImage(){
     }
 }
 
+void MainWindow::eraseTable(){
+    ui->tableWidget->setRowCount(0);
+}
+
 void MainWindow::updateTable(int minute){
     std::cout << minute << std::endl;
 
-    if(ui->tableWidget->rowCount() != minute){
+    if(ui->tableWidget->rowCount() != minute || ui->tableWidget->rowCount() == 0){
         ui->tableWidget->setRowCount(minute);
         ui->tableWidget->setItem(minute - 1, 0, new QTableWidgetItem(QString(QString::number(minute).append(". minute"))));
         ui->tableWidget->setItem(minute - 1, 1, new QTableWidgetItem(QString(QString::number(1  ))));
@@ -158,7 +163,13 @@ void MainWindow::updateTable(int minute){
         number++;
         ui->tableWidget->setItem(minute - 1, 1, new QTableWidgetItem(QString(QString::number(number))));
     }
+}
 
+void MainWindow::showBlinkExecute(){
+    ui->label_5->show();
+    blinkTimer->singleShot(1000, this, SLOT(showBlinkText()));
+}
 
-
+void MainWindow::showBlinkText(){
+    ui->label_5->hide();
 }

@@ -39,6 +39,7 @@ signals:
     void newRecordFrameSignal(cv::Mat *matrix);   //mam novy record frejm a mozem ho poslat
     void blinkSignal();     //nastalo zmurknutie
     void subjectPresentSignal(bool isVisible);  //signal s atributom ci je subjekt viditelny
+    void minuteSignal(int minute);
 
 private:
     bool stop;  //ovladanie capture
@@ -90,6 +91,9 @@ private:
     int blinkCount, nonblinkCount, reinitCount;
     int blinkThresh;
 
+    int64 startTime, currentTime;
+    float elapsedTime;
+    int minute;
 
 
     //help variables

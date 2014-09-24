@@ -106,7 +106,7 @@ bool Recorder::saveMat(cv::Mat *mat){
     elapsedTime = (float) (currentTime - startTime)/getTickFrequency();
     outputFile << frameCounter << " " << elapsedTime << endl;
 
-    minute = 1 + (int) (elapsedTime / 10);
+    //minute = 1 + (int) (elapsedTime / 60);
 
     //printTime();
 
@@ -204,10 +204,4 @@ void Recorder::generateNewFileName(){
 void Recorder::setFolder(QString str){
     folderAddress.clear();
     folderAddress.append(str);
-}
-
-void Recorder::getMinute(){
-    if(recording){
-        emit minuteSignal(minute);
-    }
 }

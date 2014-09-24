@@ -31,6 +31,9 @@ public slots:
     void updateTime();
     void updateRecImage();
     void updateTable(int minute);
+    void showBlinkText();
+    void showBlinkExecute();
+    void eraseTable();
 
 signals:
     void finished();    //koniec GUI
@@ -56,6 +59,7 @@ private slots:  //gui sloty
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
+    QTimer *blinkTimer;
     QTimer *recTimer;
 };
 
