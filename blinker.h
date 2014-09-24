@@ -50,6 +50,7 @@ private:
     QString capString;
     cv::VideoCapture cap;
     cv::Mat frame, previousFrame;
+    cv::Mat recordFrame, senderFrame;
     int frameCount;
     cv::CascadeClassifier faceCascade, eyeCascade;
     float fpsNum = 30.0;

@@ -73,6 +73,8 @@ void Blinker::startCapture(){
         return;
     }
 
+    frame.copyTo(recordFrame);
+    frame.copyTo(senderFrame);
     cvtColor(frame, frame, CV_BGR2GRAY);
 
     //reinitialization
@@ -604,26 +606,26 @@ void Blinker::drawFrame(){
     if(leftFinalPoints.size() != 0 && rightFinalPoints.size() != 0){
         //final thigns---------------------------------------------------------
         for(int i = 0; i < leftFeaturesNext.size(); i++){
-            circle(frame, leftFeaturesNext[i], 1, Scalar(0, 0, 0), 1, 8);
+            circle(senderFrame, leftFeaturesNext[i], 1, Scalar(0, 0, 0), 1, 8);
         }
 
         for(int i = 0; i < rightFeaturesNext.size(); i++){
-            circle(frame, rightFeaturesNext[i], 1, Scalar(0, 0, 0), 1, 8);
+            circle(senderFrame, rightFeaturesNext[i], 1, Scalar(0, 0, 0), 1, 8);
         }
 
         for(int i = 0; i < leftFinalPoints.size(); i++){
-            circle(frame, leftFinalPoints[i], 1, Scalar(255, 255, 255), 1, 8);
+            circle(senderFrame, leftFinalPoints[i], 1, Scalar(255, 255, 255), 1, 8);
         }
 
         for(int i = 0; i < rightFinalPoints.size(); i++){
-            circle(frame, rightFinalPoints[i], 1, Scalar(255, 255, 255), 1, 8);
+            circle(senderFrame, rightFinalPoints[i], 1, Scalar(255, 255, 255), 1, 8);
         }
 
         //circle(frame, leftCenter, 5, Scalar(0, 0, 0), 1, 8);
         //circle(frame, rightCenter, 5, Scalar(0, 0, 0), 1, 8);
 
-        rectangle(frame, leftRect, Scalar(0, 0, 0), 1, 8);
-        rectangle(frame, rightRect, Scalar(0, 0, 0), 1, 8);
+        rectangle(senderFrame, leftRect, Scalar(0, 0, 0), 1, 8);
+        rectangle(senderFrame, rightRect, Scalar(0, 0, 0), 1, 8);
     }
 }
 
@@ -680,7 +682,6 @@ void Blinker::resetVariables(){
 }
 
 void Blinker::sendFrame(){
-
     currentTime = getTickCount();
 
     elapsedTime = (float) (currentTime - startTime)/getTickFrequency();
@@ -688,11 +689,11 @@ void Blinker::sendFrame(){
     minute = 1 + (int) (elapsedTime / 60);
 
 
-    emit newFrameSignal(&frame);
+    emit newFrameSignal(&senderFrame);
 }
 
 void Blinker::sendRecordFrame(){
-    emit newRecordFrameSignal(&frame);
+    emit newRecordFrameSignal(&recordFrame);
 }
 
 void Blinker::setCap(QString string){
