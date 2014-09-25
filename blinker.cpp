@@ -61,6 +61,13 @@ void Blinker::startCapture(){
         }
         cvtColor(previousFrame, previousFrame, CV_BGR2GRAY);
         frameCount++;
+
+        if(send){
+            sendFrame();
+        }
+        if(record){
+            sendRecordFrame();
+        }
     }
 
     //process
@@ -97,6 +104,9 @@ void Blinker::startCapture(){
 
             if(send){
                 sendFrame();
+            }
+            if(record){
+                sendRecordFrame();
             }
 
             QTimer::singleShot(0, this, SLOT(startCapture()));
@@ -156,9 +166,17 @@ void Blinker::startCapture(){
     sortMoves(leftFinalPoints, movesLeftX, movesLeftY, movesLeftCount, leftLost, leftFeatures, leftFeaturesNext, leftRect, leftCenter);
     sortMoves(rightFinalPoints, movesRightX, movesRightY, movesRightCount, rightLost, rightFeatures, rightFeaturesNext, rightRect, rightCenter);
 
-    //final blink status
-    leftBlink = getStatus(movesLeftY, movesLeftCount, movesLeftYPrev, movesLeftCountPrev, centerDist, stateLeft, blinkFramesLeft, fpsNum);
-    rightBlink = getStatus(movesRightY, movesRightCount, movesRightYPrev, movesRightCountPrev, centerDist, stateRight, blinkFramesRight, fpsNum);
+    if(leftFinalPoints.size() > 0 && rightFinalPoints.size() > 0){
+        //final blink status
+        leftBlink = getStatus(movesLeftY, movesLeftCount, movesLeftYPrev, movesLeftCountPrev, centerDist, stateLeft, blinkFramesLeft, fpsNum);
+        rightBlink = getStatus(movesRightY, movesRightCount, movesRightYPrev, movesRightCountPrev, centerDist, stateRight, blinkFramesRight, fpsNum);
+
+    }
+    else{
+        init = true;
+        leftBlink = false;
+        rightBlink = false;
+    }
 
     //blink occured
     if((leftBlink || rightBlink) && blinkCount > blinkThresh){
@@ -263,7 +281,7 @@ bool Blinker::loadCascades(){
 
 bool Blinker::getEyes(){
     vector<Rect> faces;
-    faceCascade.detectMultiScale(frame, faces, 1.1, 1, 0
+    faceCascade.detectMultiScale(frame, faces, 1.1, 1, 2
                                  |CV_HAAR_FIND_BIGGEST_OBJECT
                                  |CV_HAAR_DO_ROUGH_SEARCH
                                  ,Size(50, 50));
