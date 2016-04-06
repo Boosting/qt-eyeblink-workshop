@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = eyeBLINK
 TEMPLATE = app
 
+LIBS += `pkg-config opencv --libs`
 
 #LIBS += -LC:/opencv/build/qt/lib \
 #-lopencv_core246 \
@@ -26,22 +27,22 @@ TEMPLATE = app
 #-lopencv_flann246 \
 #-lopencv_nonfree246
 
-LIBS += -LC:\\opencv\\build\\qt\\bin \
-    libopencv_core246 \
-    libopencv_highgui246 \
-    libopencv_imgproc246 \
-    libopencv_features2d246 \
-    libopencv_calib3d246 \
-    libopencv_legacy246 \
-    libopencv_ml246 \
-    libopencv_video246 \
-    libopencv_objdetect246 \
-    libopencv_contrib246 \
-    libopencv_flann246 \
-    libopencv_nonfree246 \
+#LIBS += -LC:\\opencv\\build\\qt\\bin \
+#    libopencv_core246 \
+#    libopencv_highgui246 \
+#    libopencv_imgproc246 \
+#    libopencv_features2d246 \
+#    libopencv_calib3d246 \
+#    libopencv_legacy246 \
+#    libopencv_ml246 \
+#    libopencv_video246 \
+#    libopencv_objdetect246 \
+#    libopencv_contrib246 \
+#    libopencv_flann246 \
+#    libopencv_nonfree246 \
 
 
-INCLUDEPATH += "C:/opencv/build/include"
+#INCLUDEPATH += "C:/opencv/build/include"
 
 SOURCES +=\
         mainwindow.cpp \
